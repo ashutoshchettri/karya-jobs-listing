@@ -1,0 +1,66 @@
+Introduction to the Project
+
+- The video presents a tutorial on building a full-stack job listing website using Next.js 14, React Hook Forms, Prisma, Railway, Edge Store, and Tailwind CSS.
+- The features of the website include a search form for jobs, job listings, a job posting feature, and a footer section.
+
+Website Features Overview
+
+- The homepage features a search form that allows users to search for jobs by title, location, or company name.
+- Users can click on a job listing to view detailed information about the job, including the description and other relevant details.
+- Additional sections on the homepage include an About section, a Contact section with a form, and a footer.
+- The navbar contains a button for posting a job, which directs users to a job posting page.
+
+Setting Up the Project
+
+- A new Next.js application is created using the command 'npx create-next-app@latest' with TypeScript and ESlint configurations.
+- The project structure is organized into folders for components, constants, and pages, with a focus on maintaining clean and manageable code.
+
+Creating the Job Posting Form
+
+- The job posting form utilizes React Hook Forms for state management and validation, ensuring users cannot submit an empty form.
+- The form collects various job details, including title, location, company name, salary, image upload, employment type, and job description.
+- Once submitted, the job listing is displayed on the homepage, demonstrating the dynamic nature of the application.
+
+Implementing the Navbar
+
+- The navbar is created as a client component and includes links for navigation, including a button for posting jobs.
+- State management is used to handle the visibility of the mobile menu, allowing for a responsive design.
+
+Database Setup with Prisma and Railway
+
+- Prisma is utilized for database management, with a PostgreSQL database set up on Railway.
+- The schema for job postings is defined, including fields for ID, name, description, salary, location, author, image, employment type, and created date.
+- Migrations are performed to ensure the database reflects the defined schema accurately.
+
+Image Management with Edge Store
+
+- Edge Store is integrated to handle image uploads, allowing users to upload images when posting jobs.
+- Environment variables are set up to connect Edge Store with the application, ensuring seamless image management.
+
+Creating the Search Functionality
+
+- The search functionality allows users to filter job listings based on title, location, and company name.
+- State management with Zustand is implemented to manage the search filter state across the application.
+- The search form is designed to be user-friendly, dynamically updating job listings based on user input.
+
+Job Listings and Display
+
+- Job listings are displayed in a grid format, with each job card showing relevant details such as the job title, company name, salary, and location.
+- The application includes a "Show More" button that allows users to load additional job listings incrementally.
+
+Additional Sections: About, Sponsors, and Contact
+
+- The About section provides information about the website and its purpose, enhancing user engagement.
+- The Sponsors section highlights various companies, showcasing partnerships and affiliations.
+- The Contact section includes a form for users to reach out, facilitating communication between users and the website administrators.
+
+Dynamic Routing for Job Details
+
+- Dynamic routing is implemented to allow users to navigate to specific job detail pages by clicking on job listings.
+- The application uses Next.js features to fetch job details based on the job ID from the URL, ensuring a smooth user experience.
+
+Final Touches and Testing
+
+- The application undergoes final testing to ensure all functionalities work as expected, including job posting, searching, and viewing job details.
+- Styling adjustments are made to enhance the overall look and feel of the application, ensuring a polished user interface.
+

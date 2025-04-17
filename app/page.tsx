@@ -1,6 +1,6 @@
 const Home = () => {
   return (
-    <div>Job Listing Board - Karya</div>
+    <div></div>
   )
 }
 
