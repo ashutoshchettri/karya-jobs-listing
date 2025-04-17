@@ -18,28 +18,28 @@ const Navbar = () => {
         <div className="max-w-[1450px] w-[90%] mx-auto flex justify-between items-center">
             <Link href={"/"}>
             <div className="flex items-center gap-1">
-                <h1 className="text-black font-semibold uppercase text-xl">
+                <h1 className="text-white font-semibold uppercase text-xl">
                     Karya
                 </h1>
             </div>
             </Link>
 
-            <ul className="flex gap-16 items-center max-md:hidden">
+            <ul className="flex gap-16 items-center max-md:hidden text-white">
                 {navLinks.map((link, index) =>(
                     <Link href={link.route} key={index}>
                         <li>{link.name}</li>
                     </Link>
                 ))}
             </ul>
-            <div className="max-md flex justify-center items-center gap-10">
+            <div className="max-md flex justify-center items-center gap-10 text-white">
                 <Link href="/create">
                     <Button>Post a Job</Button>
                 </Link>
-                <div className="md:hidden text-3xl cursor-pointer text-black" onClick={handleOpenMobileMenu}>
+                <div className="md:hidden text-3xl cursor-pointer text-white" onClick={handleOpenMobileMenu}>
                     {openMobileMenu ? <MdClose /> : <FiMenu />}
                 </div>
                 {openMobileMenu && (
-                    <ul className="md:hidden absolute top-14 right-5 px-4 py-6 text-center rounded-md flex flex-col gap-3 shadow-md">
+                    <ul className="bg-white text-black md:hidden absolute top-14 right-5 px-4 py-6 text-center rounded-md flex flex-col gap-3 shadow-md">
                         {navLinks.map((link, index) =>(
                             <Link href={link.route} key={index}
                                 onClick={() => setOpenMobileMenu(false)}
