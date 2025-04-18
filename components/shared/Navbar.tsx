@@ -18,24 +18,24 @@ const Navbar = () => {
         <div className="max-w-[1450px] w-[90%] mx-auto flex justify-between items-center">
             <Link href={"/"}>
             <div className="flex items-center gap-1">
-                <h1 className="text-white font-semibold uppercase text-xl">
+                <h1 className="text-black font-semibold uppercase text-xl">
                     Karya
                 </h1>
             </div>
             </Link>
 
-            <ul className="flex gap-16 items-center max-md:hidden text-white">
+            <ul className="flex gap-16 items-center max-md:hidden text-black">
                 {navLinks.map((link, index) =>(
                     <Link href={link.route} key={index}>
                         <li>{link.name}</li>
                     </Link>
                 ))}
             </ul>
-            <div className="max-md flex justify-center items-center gap-10 text-white">
-                <Link href="/create">
-                    <Button>Post a Job</Button>
+            <div className="max-md flex justify-center items-center gap-10 text-black">
+                <Link href="/favorites">
+                    <Button>Favorites</Button>
                 </Link>
-                <div className="md:hidden text-3xl cursor-pointer text-white" onClick={handleOpenMobileMenu}>
+                <div className="md:hidden text-3xl cursor-pointer text-black" onClick={handleOpenMobileMenu}>
                     {openMobileMenu ? <MdClose /> : <FiMenu />}
                 </div>
                 {openMobileMenu && (
