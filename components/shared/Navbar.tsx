@@ -33,7 +33,7 @@ const Navbar = () => {
             </ul>
             <div className="max-md flex justify-center items-center gap-10 text-black">
                 <Link href="/favorites">
-                    <Button>Favorites</Button>
+                    <Button>Login</Button>
                 </Link>
                 <div className="md:hidden text-3xl cursor-pointer text-black" onClick={handleOpenMobileMenu}>
                     {openMobileMenu ? <MdClose /> : <FiMenu />}

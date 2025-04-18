@@ -39,10 +39,22 @@ const CreateForm = () => {
   }, [file]);
 
   const onSubmit = handleSubmit(async (data) => {
-    await createJob(data);
-    reset();
+    const res = await fetch("/api/jobs", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  
+    if (res.ok) {
+      reset();
+    } else {
+      const error = await res.json();
+      console.error("Error creating job:", error.message);
+    }
   });
-
+  
   return (
     <>
       <form onSubmit={onSubmit} className="mt-10">
