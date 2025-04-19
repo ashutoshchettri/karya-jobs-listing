@@ -11,8 +11,12 @@ const Home = async () => {
     <div>
       <Hero jobs={jobs} />
       <Jobs />
-      <AboutPage />
-      <ContactPage />
+      <section id="about">
+        <AboutPage />
+      </section>
+      <section id="contact">
+        <ContactPage />
+      </section>
       <Footer />
     </div>
   )
