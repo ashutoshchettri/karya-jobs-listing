@@ -5,8 +5,12 @@ import { formatPostedDate } from "@/utils/formatDate";
 import { getJob, getAllJobIds } from "@/lib/getJob";
 import Link from "next/link";
 
+interface Job {
+  id: string;
+}
+
 export const generateStaticParams = async () => {
-  const jobs = await getAllJobIds();
+  const jobs: Job[] = await getAllJobIds();
   return jobs.map((job) => ({
     id: job.id,
   }));
