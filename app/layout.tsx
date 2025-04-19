@@ -6,7 +6,8 @@ import Navbar from "@/components/shared/Navbar";
 import { EdgeStoreProvider } from "@/lib/edgestore";
 import SessionProvider from '@/components/shared/SessionProvider';
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,6 +43,7 @@ export default async function RootLayout({
         <EdgeStoreProvider>
         <Navbar />
         {children}
+        <Toaster position="top-right" />
         </EdgeStoreProvider>
       </SessionProvider>
       </body>

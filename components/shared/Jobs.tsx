@@ -1,49 +1,60 @@
-'use client'
+"use client";
 
-import { useState } from "react"
-import useJobStore from "@/store/useJobStore"
-import JobCard from "./JobCard"
-import Button from "../ui/Button"
+import { useState } from "react";
+import useJobStore from "@/store/useJobStore";
+import JobCard from "./JobCard";
+import Button from "../ui/Button";
 
 const Jobs = () => {
-    const {filteredJobs} = useJobStore()
-    const [visibleJobs, setvisibleJobs] = useState(4)
-    const jobsIncrement = 4
-    const showMore = () => {
-        setvisibleJobs((prev) => prev + jobsIncrement)
-    }
-    const showLess = () => {
-        setvisibleJobs((prev) => prev - jobsIncrement)
-    }
+  const { filteredJobs } = useJobStore();
+  const [visibleJobs, setVisibleJobs] = useState(4);
+  const jobsIncrement = 4;
+
+  const showMore = () => setVisibleJobs((prev) => prev + jobsIncrement);
+  const showLess = () => setVisibleJobs((prev) => prev - jobsIncrement);
+
   return (
-    <div id="jobs" className="py-10 w-full">
-        <div className="w-full text-center mb-10 text-2xl font-bold uppercase text-black">
-            <h2>Job Listings</h2>
+    <section id="jobs" className="bg-white py-20">
+      <div className="max-w-[1450px] mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 uppercase tracking-wide">
+            Job Listings
+          </h2>
+          <p className="text-gray-600 mt-3 text-base sm:text-lg">
+            Browse open positions and find your next opportunity
+          </p>
         </div>
+
         {filteredJobs.length < 1 ? (
-            <div className="w-full text-center">
-                <h1 className="text-2xl font-bold">Currently there are no openings</h1>
-                <span className="text-sm">Please check back later</span>
+          <div className="text-center">
+            <h3 className="text-2xl font-semibold text-gray-700">
+              Currently there are no openings
+            </h3>
+            <p className="text-gray-500 mt-1">Please check back later</p>
+          </div>
+        ) : (
+          <>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {filteredJobs.slice(0, visibleJobs).map((job) => (
+                <JobCard key={job.id as React.Key} job={job} />
+              ))}
             </div>
-        ):(
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 w-[90%] mx-auto max-w-[1400px]">
-                {filteredJobs.slice(0, visibleJobs).map((job) => (
-                    <JobCard key={job.id as React.Key} job={job} />
-                ))}
-            </div>
-        )}
-       {(filteredJobs.length > visibleJobs || visibleJobs > jobsIncrement) && (
-            <div className="flex justify-center mt-10 text-sm space-x-4">
+
+            {(filteredJobs.length > visibleJobs || visibleJobs > jobsIncrement) && (
+              <div className="flex justify-center mt-12 space-x-4">
                 {visibleJobs > jobsIncrement && (
-                <Button onClick={showLess}>Show Less</Button>
+                  <Button onClick={showLess}>Show Less</Button>
                 )}
                 {filteredJobs.length > visibleJobs && (
-                <Button onClick={showMore}>Show More</Button>
+                  <Button onClick={showMore}>Show More</Button>
                 )}
-            </div>
+              </div>
+            )}
+          </>
         )}
-    </div>
-  )
-}
+      </div>
+    </section>
+  );
+};
 
-export default Jobs
+export default Jobs;

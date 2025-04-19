@@ -1,6 +1,9 @@
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
 import Button from "@/components/ui/Button";
 import { formatPostedDate } from "@/utils/formatDate";
 import { getJob, getAllJobIds } from "@/lib/getJob";
+import Link from "next/link";
 
 export const generateStaticParams = async () => {
   const jobs = await getAllJobIds();
@@ -12,76 +15,71 @@ export const generateStaticParams = async () => {
 export const revalidate = 60;
 
 const JobPage = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = await params;  // Await the Promise to resolve the params
-
-  // Fetch the job based on the id
+  const { id } = await params;
   const job = await getJob(id);
 
-  if (!job) return <div>Job not found</div>;
+  const session = await getServerSession(authOptions);
+
+  if (!job) return <div className="text-center py-20 text-red-500 text-lg">Job not found</div>;
 
   const formattedPostedDate = formatPostedDate(job.createdAt);
+  const isCompany = session?.user?.role === "COMPANY";
 
   return (
     <>
-      <div className="bg-white h-fit relative w-full mt-[-70px] py-28">
-        <div className="flex flex-col h-full items-center justify-center pt-[82px] gap-20 w-[90%] mx-auto max-w-[1450px]">
-          <h1 className="text-black font-bold text-4xl">{job.name}</h1>
+      <div className="bg-gradient-to-r from-blue-100 to-white pt-36 pb-20 text-center relative">
+        <div className="max-w-[900px] mx-auto px-4">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">{job.name}</h1>
+          <p className="text-lg text-gray-600">at <span className="font-semibold">{job.author}</span></p>
         </div>
       </div>
 
-      <div className="w-[90%] mx-auto max-w-[1450px] py-20">
-        <div className="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
-          <div className="lg:col-span-4 md:col-span-6">
-            <div className="shadow rounded-md bg-white sticky top-20">
-              <div className="p-6">
-                <h5 className="text-lg font-semibold">Job Information</h5>
-                <div className="p-6 border-t border-slate-100">
-                  <ul>
-                    <li>
-                      <div>
-                        <p>Employment Type:</p>
-                        <span className="font-medium">{job.employmentType}</span>
-                      </div>
-                    </li>
-                    <li className="mt-4">
-                      <div>
-                        <p>Company:</p>
-                        <span className="font-medium">{job.author}</span>
-                      </div>
-                    </li>
-                    <li className="mt-4">
-                      <div>
-                        <p>Location:</p>
-                        <span className="font-medium">{job.location}</span>
-                      </div>
-                    </li>
-                    <li className="mt-4">
-                      <div>
-                        <p>Salary:</p>
-                        <span className="font-medium">{job.salary}k/year</span>
-                      </div>
-                    </li>
-                    <li className="mt-4">
-                      <div>
-                        <p>Posted</p>
-                        <span className="font-medium">{formattedPostedDate}</span>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+      <div className="max-w-[1450px] w-[90%] mx-auto py-16 grid grid-cols-1 md:grid-cols-12 gap-10">
+        {/* Sidebar */}
+        <aside className="md:col-span-5 lg:col-span-4">
+          <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-24 border border-gray-100">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Job Details</h2>
+            <ul className="space-y-5 text-sm text-gray-700">
+              <li>
+                <p className="text-gray-500">Employment Type:</p>
+                <span className="font-medium text-gray-800">{job.employmentType}</span>
+              </li>
+              <li>
+                <p className="text-gray-500">Company:</p>
+                <span className="font-medium text-gray-800">{job.author}</span>
+              </li>
+              <li>
+                <p className="text-gray-500">Location:</p>
+                <span className="font-medium text-gray-800">{job.location}</span>
+              </li>
+              <li>
+                <p className="text-gray-500">Salary:</p>
+                <span className="font-medium text-gray-800">${job.salary}k / year</span>
+              </li>
+              <li>
+                <p className="text-gray-500">Posted:</p>
+                <span className="font-medium text-gray-800">{formattedPostedDate}</span>
+              </li>
+            </ul>
+          </div>
+        </aside>
+
+        <main className="md:col-span-7 lg:col-span-8">
+          <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+            <h2 className="text-xl font-semibold text-gray-900 mb-6">Job Description</h2>
+            <p className="text-gray-800 leading-relaxed whitespace-pre-line">
+              {job.description}
+            </p>
+
+            <div className="mt-10">
+              {!isCompany && (
+                <Link href={`/job/${job.id}/apply`}>
+                  <Button>Apply Now</Button>
+                </Link>
+              )}
             </div>
           </div>
-
-          <div className="lg:col-span-8 md:col-span-6">
-            <h5 className="text-lg font-semibold">Job Description:</h5>
-            <p className="mt-4 text-black">{job.description}</p>
-
-            <div className="mt-4">
-              <Button>Apply Now</Button>
-            </div>
-          </div>
-        </div>
+        </main>
       </div>
     </>
   );

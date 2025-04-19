@@ -14,8 +14,6 @@ model User {
   name        String
   role        Role          @default(USER)
   createdAt   DateTime      @default(now())
-
-  jobPostings JobPosting[]  @relation("UserJobPostings")
 }
 
 model JobPosting {
@@ -24,8 +22,7 @@ model JobPosting {
   description    String
   salary         Float?    @default(0)
   location       String
-  authorId       String?   @db.ObjectId
-  author         User?     @relation("UserJobPostings", fields: [authorId], references: [id])
+  author         String
   img            String?
   employmentType String?
   createdAt      DateTime  @default(now())
