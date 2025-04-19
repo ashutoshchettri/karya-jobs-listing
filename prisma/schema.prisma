@@ -7,14 +7,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  email       String        @unique
+  password    String
+  name        String
+  role        Role          @default(USER)
+  createdAt   DateTime      @default(now())
+
+  jobPostings JobPosting[]  @relation("UserJobPostings")
+}
+
 model JobPosting {
-  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
   name           String
   description    String
-  salary         Float?   @default(0)
+  salary         Float?    @default(0)
   location       String
-  author         String
+  authorId       String?   @db.ObjectId
+  author         User?     @relation("UserJobPostings", fields: [authorId], references: [id])
   img            String?
   employmentType String?
-  createdAt      DateTime @default(now())
+  createdAt      DateTime  @default(now())
 }
+
+enum Role {
+  USER
+  COMPANY
+}
+

@@ -4,6 +4,9 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
 import { EdgeStoreProvider } from "@/lib/edgestore";
+import SessionProvider from '@/components/shared/SessionProvider';
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,18 +29,21 @@ export const metadata: Metadata = {
   description: "Job Listing Board",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${poppins.variable} antialiased`}>
+      <SessionProvider session={session}>
         <EdgeStoreProvider>
         <Navbar />
         {children}
         </EdgeStoreProvider>
+      </SessionProvider>
       </body>
     </html>
   );
