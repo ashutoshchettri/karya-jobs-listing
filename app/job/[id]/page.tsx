@@ -76,11 +76,22 @@ const JobPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             </p>
 
             <div className="mt-10">
-              {!isCompany && (
-                <Link href={`/job/${job.id}/apply`}>
-                  <Button>Apply Now</Button>
-                </Link>
-              )}
+            {!isCompany && (
+              <>
+                {session ? (
+                  <Link href={`/job/${job.id}/apply`}>
+                    <Button>Apply Now</Button>
+                  </Link>
+                ) : (
+                  <div className="mt-4">
+                    <p className="text-sm text-red-500 mb-2">You need to login to apply for this job.</p>
+                    <Link href="/signin">
+                      <Button>Login to Apply</Button>
+                    </Link>
+                  </div>
+                )}
+              </>
+            )}
             </div>
           </div>
         </main>

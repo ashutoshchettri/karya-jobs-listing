@@ -5,7 +5,7 @@ interface ApplyPageProps {
 }
 
 export default async function ApplyPage({ params }: ApplyPageProps) {
-  const { id } = await params; // Resolving the Promise to get 'id'
+  const { id } = await params;
 
   return <ApplyForm jobId={id} />;
 }
